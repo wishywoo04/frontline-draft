@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+<title>Frontline Draft — Tactics Card Battler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- HOME -->
+<section id="screen-home" class="screen active">
+  <div class="home-wrap">
+    <h1 class="title">FRONTLINE <span>DRAFT</span></h1>
+    <p class="subtitle">Draft your squad. Deploy your line. Break their base.</p>
+    <div class="home-actions">
+      <button id="btn-create" class="btn btn-primary">Create Room</button>
+      <button id="btn-join" class="btn btn-secondary">Join Room</button>
+      <button id="btn-vs-ai" class="btn btn-ghost">Practice vs AI</button>
+    </div>
+    <div id="join-form" class="join-form hidden">
+      <input id="input-room-code" maxlength="6" placeholder="ROOM CODE" autocapitalize="characters" />
+      <button id="btn-join-confirm" class="btn btn-primary">Join</button>
+    </div>
+  </div>
+</section>
+
+<!-- LOBBY -->
+<section id="screen-lobby" class="screen">
+  <div class="panel">
+    <h2>Room Code</h2>
+    <div id="lobby-code" class="room-code">------</div>
+    <p class="hint">Share this code with your opponent. Waiting for both players…</p>
+    <div id="lobby-players" class="lobby-players"></div>
+  </div>
+</section>
+
+<!-- DRAFT -->
+<section id="screen-draft" class="screen">
+  <header class="phase-header">
+    <div class="phase-title">Draft Phase</div>
+    <div id="draft-status" class="phase-status">Waiting…</div>
+  </header>
+  <div class="draft-columns">
+    <div class="draft-mine">
+      <h3>Your Squad (<span id="draft-count">0</span>/10)</h3>
+      <div id="draft-my-cards" class="mini-card-list"></div>
+    </div>
+    <div class="draft-pool-wrap">
+      <h3>Draft Pool</h3>
+      <div id="draft-pool" class="card-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SETUP -->
+<section id="screen-setup" class="screen">
+  <header class="phase-header">
+    <div class="phase-title">Setup Phase</div>
+    <div id="setup-status" class="phase-status">Place 6 of your 10 units in your zone</div>
+  </header>
+  <div class="setup-layout">
+    <div class="setup-hand">
+      <h3>Your Squad — tap a card, then tap a highlighted tile</h3>
+      <div id="setup-hand-cards" class="mini-card-list"></div>
+    </div>
+    <div class="board-wrap">
+      <div id="setup-board" class="board"></div>
+    </div>
+    <button id="btn-setup-submit" class="btn btn-primary" disabled>Lock In (0/6 placed)</button>
+  </div>
+</section>
+
+<!-- BATTLE -->
+<section id="screen-battle" class="screen">
+  <header class="battle-header">
+    <div class="base-bar you">
+      <div class="base-label">YOUR BASE</div>
+      <div class="hp-bar"><div id="hp-you" class="hp-fill"></div></div>
+      <div id="hp-you-text" class="hp-text">30/30</div>
+    </div>
+    <div class="turn-indicator">
+      <div id="turn-text">—</div>
+      <div class="energy-display">⚡ <span id="energy-you">0</span></div>
+    </div>
+    <div class="base-bar opp">
+      <div class="base-label">ENEMY BASE</div>
+      <div class="hp-bar"><div id="hp-opp" class="hp-fill"></div></div>
+      <div id="hp-opp-text" class="hp-text">30/30</div>
+    </div>
+  </header>
+
+  <div class="battle-layout">
+    <div class="board-wrap">
+      <div id="battle-board" class="board"></div>
+    </div>
+    <aside class="side-panel">
+      <div id="action-panel" class="action-panel">
+        <div class="hint">Tap one of your units on the board to act.</div>
+      </div>
+      <div class="reserves">
+        <h4>Reserves (<span id="reserve-count">0</span>) — tap to deploy</h4>
+        <div id="reserve-cards" class="mini-card-list"></div>
+      </div>
+      <div class="game-log">
+        <h4>Battle Log</h4>
+        <div id="log-list" class="log-list"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- GAME OVER -->
+<section id="screen-gameover" class="screen">
+  <div class="panel gameover-panel">
+    <h2 id="gameover-title">Victory!</h2>
+    <p id="gameover-sub"></p>
+    <button id="btn-play-again" class="btn btn-primary">Play Again</button>
+    <button id="btn-home" class="btn btn-ghost">Back to Home</button>
+  </div>
+</section>
+
+<!-- CARD DETAIL POPUP -->
+<div id="card-popup" class="card-popup hidden">
+  <div class="card-popup-inner" id="card-popup-inner"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
